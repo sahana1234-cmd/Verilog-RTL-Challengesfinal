@@ -13,9 +13,20 @@ always @(posedge clk) begin
         stable_high<=0;
         pulse_out<=0;
 
-    end
+    endq
 else begin
-end
+    pulse_out<=0;
+    if(signal_in && previous_input && !stable_high)begin
+        stable_high<=1;
+        pulse_out<=1;
+    end
+    else if(!signal_in)begin
+        stable_high<=0;
+
+    end
+previous_input<=signal_in;
+    end
+
 end
 
 endmodule
